@@ -45,6 +45,7 @@ export default async function handler(req, res) {
     const contentBookIdKey = getFieldId('CONTENT', '書索引') || '書索引';
     const dayKey = getFieldId('CONTENT', '天數') || '天數';
     const contentKey = getFieldId('CONTENT', '內容') || '內容';
+    const titleKey = getFieldId('CONTENT', 'TITLE') || process.env.RAGIC_FIELD_CONTENT_TITLE || '標題';
     const row = Array.isArray(contents) ? contents.find(
       (r) => (r[contentBookIdKey] ?? r.書索引) === bookId && (String(r[dayKey] ?? r.天數) === day || r[dayKey] === Number(day))
     ) : null;
@@ -52,7 +53,8 @@ export default async function handler(req, res) {
       return res.status(404).json({ allowed: true, content: null, message: '找不到該段內容' });
     }
     const content = row[contentKey] ?? row.內容 ?? '';
-    return res.status(200).json({ allowed: true, content });
+    const title = row[titleKey] ?? row.標題 ?? '';
+    return res.status(200).json({ allowed: true, content, title });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ allowed: false, message: '伺服器錯誤' });

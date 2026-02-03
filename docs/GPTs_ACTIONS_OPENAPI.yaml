@@ -1,11 +1,11 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: 禱告手冊小幫手 API
   description: GPTs Actions 用於驗證、書單、閱讀內容與進度
   version: 1.0.0
 servers:
-  - url: https://YOUR_VERCEL_APP.vercel.app
-    description: 請替換為你的 Vercel 部署網址
+  - url: https://prayer-books.vercel.app
+    description: Vercel 部署網址
 paths:
   /api/verify/check:
     post:
@@ -110,6 +110,7 @@ paths:
                 properties:
                   allowed: { type: boolean }
                   content: { type: string }
+                  title: { type: string, description: 該段內容的標題（若有） }
                   message: { type: string }
                   purchase_link: { type: string }
   /api/reading/progress:
@@ -130,6 +131,7 @@ paths:
                 properties:
                   progress: { type: object }
                   content: { type: string }
+                  title: { type: string, description: 該段內容的標題（若有） }
     post:
       operationId: update_reading_progress
       summary: 更新閱讀進度

@@ -53,6 +53,7 @@ export default async function handler(req, res) {
       const contentBookIdKey = getFieldId('CONTENT', '書索引') || '書索引';
       const contentDayKey = getFieldId('CONTENT', '天數') || '天數';
       const contentKey = getFieldId('CONTENT', '內容') || '內容';
+      const contentTitleKey = getFieldId('CONTENT', 'TITLE') || process.env.RAGIC_FIELD_CONTENT_TITLE || '標題';
       const contentRow = Array.isArray(contents) ? contents.find(
         (r) => (r[contentBookIdKey] ?? r.書索引) === bookId && (String(r[contentDayKey] ?? r.天數) === String(day) || r[contentDayKey] === Number(day))
       ) : null;
@@ -60,9 +61,12 @@ export default async function handler(req, res) {
       const bookNameKey = getFieldId('BOOKS', '書名') || '書名';
       const typeKey = getFieldId('BOOKS', '類型') || '類型';
       const bookRow = Array.isArray(books) ? books.find((b) => (b[getFieldId('BOOKS', '書索引')] ?? b.書索引) === bookId) : null;
+      const content = contentRow ? (contentRow[contentKey] ?? contentRow.內容) : null;
+      const title = contentRow ? (contentRow[contentTitleKey] ?? contentRow.標題 ?? '') : '';
       return res.status(200).json({
         progress: { book_id: bookId, book_name: bookRow?.[bookNameKey] ?? bookRow?.書名, type: latest[progressTypeKey] ?? latest.類型, day },
-        content: contentRow ? (contentRow[contentKey] ?? contentRow.內容) : null,
+        content,
+        title: title || undefined,
       });
     }
 
