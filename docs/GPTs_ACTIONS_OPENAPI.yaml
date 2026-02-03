@@ -1,0 +1,158 @@
+openapi: 3.0.0
+info:
+  title: 禱告手冊小幫手 API
+  description: GPTs Actions 用於驗證、書單、閱讀內容與進度
+  version: 1.0.0
+servers:
+  - url: https://YOUR_VERCEL_APP.vercel.app
+    description: 請替換為你的 Vercel 部署網址
+paths:
+  /api/verify/check:
+    post:
+      operationId: verify_code
+      summary: 驗證短碼
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code]
+              properties:
+                code:
+                  type: string
+                  description: 使用者貼上的驗證碼（4 碼）
+      responses:
+        "200":
+          description: 驗證結果
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  verified: { type: boolean }
+                  message: { type: string }
+  /api/books/purchased:
+    get:
+      operationId: get_books_purchased
+      summary: 取得已購買的書
+      parameters:
+        - name: code
+          in: query
+          description: 驗證碼（本對話使用者已提供時帶入）
+          schema: { type: string }
+      responses:
+        "200":
+          description: 已購買的書列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  books:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        book_id: { type: string }
+                        book_name: { type: string }
+                        type: { type: string }
+                        description: { type: string }
+  /api/books/available:
+    get:
+      operationId: get_books_available
+      summary: 取得還沒購買的書（含購買連結）
+      parameters:
+        - name: code
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: 未購買的書列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  books:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        book_id: { type: string }
+                        book_name: { type: string }
+                        type: { type: string }
+                        description: { type: string }
+                        purchase_link: { type: string }
+  /api/reading/content:
+    get:
+      operationId: get_reading_content
+      summary: 取得某書某天的完整內容（僅已購買可讀）
+      parameters:
+        - name: code
+          in: query
+          schema: { type: string }
+        - name: book_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: day
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: 內容或未購買
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  allowed: { type: boolean }
+                  content: { type: string }
+                  message: { type: string }
+                  purchase_link: { type: string }
+  /api/reading/progress:
+    get:
+      operationId: get_reading_progress
+      summary: 取得上次閱讀進度與該段內容
+      parameters:
+        - name: code
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: 進度與完整內容
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  progress: { type: object }
+                  content: { type: string }
+    post:
+      operationId: update_reading_progress
+      summary: 更新閱讀進度
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [book_id]
+              properties:
+                code: { type: string }
+                book_id: { type: string }
+                天數: { type: [string, number] }
+                類型: { type: string }
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  book_id: { type: string }
+                  day: {}
+                  updated_at: { type: string }

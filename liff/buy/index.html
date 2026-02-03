@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>禱告手冊小幫手 — 購買</title>
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 360px; margin: 2rem auto; padding: 1rem; }
+    h1 { font-size: 1.25rem; }
+    .book { border: 1px solid #eee; padding: 1rem; margin: 1rem 0; border-radius: 8px; }
+    button { padding: 0.75rem 1.5rem; font-size: 1rem; background: #06c755; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+    .error { color: #c00; margin: 1rem 0; }
+    #status { margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>禱告手冊小幫手 — 購買</h1>
+  <p id="status">讀取中…</p>
+  <div id="book" class="book" style="display: none;">
+    <p><strong id="bookName"></strong></p>
+    <p>價格：<span id="price"></span></p>
+    <p><label>收據抬頭（姓名或法人組織名稱）<span style="color:#c00">*</span></label><br/>
+    <input type="text" id="receiptTitle" placeholder="請填寫收據抬頭" required /></p>
+    <p><label>統一編號（選填，法人可填）</label><br/>
+    <input type="text" id="taxId" placeholder="選填" /></p>
+    <p><label>Email（收據用）<span style="color:#c00">*</span></label><br/>
+    <input type="email" id="buyerEmail" placeholder="請填寫 email" required /></p>
+    <button type="button" id="payBtn">Line Pay 付款</button>
+  </div>
+  <div id="success" style="display: none;">
+    <p>購買成功，可回到 GPTs 閱讀本書。</p>
+  </div>
+  <div id="error" class="error" style="display: none;"></div>
+  <script>
+    window.API_BASE = window.API_BASE || (window.location.origin + '/api');
+    window.LIFF_ID = window.LIFF_ID || '';
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>

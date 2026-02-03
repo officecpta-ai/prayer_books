@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>禱告手冊小幫手 — 驗證</title>
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 360px; margin: 2rem auto; padding: 1rem; text-align: center; }
+    h1 { font-size: 1.25rem; }
+    .code { font-size: 2rem; letter-spacing: 0.5rem; margin: 1rem 0; padding: 0.75rem; background: #f0f0f0; border-radius: 8px; }
+    button { padding: 0.75rem 1.5rem; font-size: 1rem; background: #06c755; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .hint { color: #666; font-size: 0.9rem; margin-top: 1rem; }
+    .error { color: #c00; margin: 1rem 0; }
+    #status { margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>禱告手冊小幫手</h1>
+  <p id="status">正在驗證身份…</p>
+  <div id="result" style="display: none;">
+    <p>驗證成功，請將以下驗證碼帶回 GPTs 完成驗證：</p>
+    <div class="code" id="codeDisplay">----</div>
+    <button type="button" id="copyBtn">複製驗證碼</button>
+    <p class="hint">請回到 GPTs，貼上驗證碼完成驗證。</p>
+  </div>
+  <div id="error" class="error" style="display: none;"></div>
+  <script>
+    window.API_BASE = window.API_BASE || (window.location.origin + '/api');
+    window.LIFF_ID = window.LIFF_ID || ''; // 請替換為你的 LIFF ID，或由後端注入
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>

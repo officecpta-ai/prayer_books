@@ -1,0 +1,19 @@
+{
+  "name": "prayer-handbook-assistant",
+  "version": "1.0.0",
+  "description": "禱告手冊小幫手 — Line Pay + Ragic + GPTs",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "jose": "^5.2.0"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  }
+}
