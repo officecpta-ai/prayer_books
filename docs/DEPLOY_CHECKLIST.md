@@ -43,6 +43,22 @@
 
 ---
 
+## 一之一、部署保護與 Production 網域（若出現 404 或「需登入」）
+
+### 若 prayer-books.vercel.app 顯示 404
+
+- **Production 網域** 可能還指到舊的部署（例如只從 Git 部署、尚未包含最新 vercel.json / api/serve-verify）。
+- **做法**：在 Vercel → **Deployments**，確認最新一次 **Production** 部署是否包含你的改動；若不是，請 **commit 並 push** 到 main，讓 Vercel 從 Git 重新部署，或從該次部署點 **Promote to Production**。
+
+### 若開啟網址出現「Authentication Required」或 Vercel 登入頁
+
+- 代表專案開啟了 **Deployment Protection**，未登入 Vercel 的訪客（含 GPTs 使用者）無法看到站點。
+- **做法**：Vercel 專案 → **Settings** → **Deployment Protection** → 將 **Production** 設為 **Disabled**（或僅對 Preview 啟用），讓 `prayer-books.vercel.app` 可公開存取。
+
+完成後再開 `https://prayer-books.vercel.app/` 或 `https://prayer-books.vercel.app/api/serve-verify` 應可看到驗證頁。
+
+---
+
 ## 二、LIFF ID（Line 前端）
 
 LIFF 驗證頁與購買頁需要 **LIFF ID**，目前程式從 `window.LIFF_ID` 讀取。

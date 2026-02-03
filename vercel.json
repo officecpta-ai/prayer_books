@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "name": "prayer-handbook-assistant",
   "builds": [
     { "src": "api/**/*.js", "use": "@vercel/node" }
   ],
   "rewrites": [
-    { "source": "/liff/verify", "destination": "/liff/verify/index.html" },
-    { "source": "/liff/verify/", "destination": "/liff/verify/index.html" },
+    { "source": "/api/(.*)/", "destination": "/api/$1" },
+    { "source": "/", "destination": "/api/serve-verify" },
+    { "source": "/liff/verify", "destination": "/api/serve-verify" },
+    { "source": "/liff/verify/", "destination": "/api/serve-verify" },
     { "source": "/liff/buy", "destination": "/liff/buy/index.html" },
     { "source": "/liff/buy/", "destination": "/liff/buy/index.html" }
   ]
