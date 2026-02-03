@@ -3,13 +3,6 @@
   "builds": [
     { "src": "api/**/*.js", "use": "@vercel/node" }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/liff/verify", "dest": "/liff/verify/index.html" },
-    { "src": "/liff/verify/", "dest": "/liff/verify/index.html" },
-    { "src": "/liff/buy", "dest": "/liff/buy/index.html" },
-    { "src": "/liff/buy/", "dest": "/liff/buy/index.html" }
-  ],
   "rewrites": [
     { "source": "/liff/verify", "destination": "/liff/verify/index.html" },
     { "source": "/liff/verify/", "destination": "/liff/verify/index.html" },
